@@ -1,0 +1,10 @@
+---
+- name: Configure the login banner
+  hosts: switches
+  gather_facts: false
+  tasks:
+    - name: Set MOTD
+      ios_banner:
+        banner: motd
+        text: Welcome!!
+        state: present
