@@ -1,0 +1,68 @@
+---
+
+- name: bring up VLAN interfaces
+  hosts: switches
+  gather_facts: false
+  tasks:
+    - name: vlan up no shut
+      ios_config:
+        lines:
+          - interface vlan 10
+          - no shut
+          - interface vlan 20
+          - no ip address
+          - no shut
+          - interface vlan 30
+          - no ip address
+          - no shut
+          - exit
+
+- name: add inter-VLAN routing on switch1
+  hosts: switch1
+  gather_facts: false
+  tasks:
+    - name: set SVIs
+      ios_l3_interfaces:
+        config:
+          - name: "{{ item.name }}"
+            ipv4:
+              - address: "{{ item.ip }}"
+        state: replaced
+      loop:
+        - { name: "vlan10", ip: "10.1.11.101 255.255.255.0" }
+        - { name: "vlan20", ip: "10.1.22.101 255.255.255.0" }
+        - { name: "vlan30", ip: "10.1.33.101 255.255.255.0" }
+
+    - name: set up inter-VLAN routing
+      ios_config:
+        lines:
+          - ip routing
+
+- name: add inter-VLAN routing on switch2
+  hosts: switch2
+  gather_facts: false
+  tasks:
+    - name: set SVIs
+      ios_l3_interfaces:
+        config:
+          - name: "{{ item.name }}"
+            ipv4:
+              - address: "{{ item.ip }}"
+        state: replaced
+      loop:
+        - { name: "vlan10", ip: "10.1.11.102 255.255.255.0" }
+        - { name: "vlan20", ip: "10.1.22.102 255.255.255.0" }
+        - { name: "vlan30", ip: "10.1.33.102 255.255.255.0" }
+
+    - name: set up inter-VLAN routing
+      ios_config:
+        lines:
+          - ip routing
+
+- name: save configuration
+  hosts: switches
+  gather_facts: false
+  tasks:
+    - name: save config
+      ios_config:
+        save_when: modified

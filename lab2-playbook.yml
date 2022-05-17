@@ -23,9 +23,9 @@
             state: active
         state: replaced
       loop:
-        - { name: V10, vlan: 10 }
-        - { name: V20, vlan: 20 }
-        - { name: V30, vlan: 30 }
+        - { name: "vlan10", vlan: 10 }
+        - { name: "vlan20", vlan: 20 }
+        - { name: "vlan30", vlan: 30 }
 
     - name: connect ports to VLANs
       ios_l2_interfaces:
@@ -35,9 +35,28 @@
               vlan: "{{ item.vlan }}"
         state: replaced
       loop:
-        - { name: "GigabitEthernet1/0/1-8", vlan: 10 }
-        - { name: "GigabitEthernet1/0/9-16", vlan: 20 }
-        - { name: "GigabitEthernet1/0/17-22", vlan: 30 }
+        - { name: "GigabitEthernet1/0/1", vlan: 10 }
+        - { name: "GigabitEthernet1/0/2", vlan: 10 }
+        - { name: "GigabitEthernet1/0/3", vlan: 10 }
+        - { name: "GigabitEthernet1/0/4", vlan: 10 }
+        - { name: "GigabitEthernet1/0/5", vlan: 10 }
+        - { name: "GigabitEthernet1/0/6", vlan: 10 }
+        - { name: "GigabitEthernet1/0/7", vlan: 10 }
+        - { name: "GigabitEthernet1/0/8", vlan: 10 }
+        - { name: "GigabitEthernet1/0/9", vlan: 20 }
+        - { name: "GigabitEthernet1/0/10", vlan: 20 }
+        - { name: "GigabitEthernet1/0/11", vlan: 20 }
+        - { name: "GigabitEthernet1/0/12", vlan: 20 }
+        - { name: "GigabitEthernet1/0/13", vlan: 20 }
+        - { name: "GigabitEthernet1/0/14", vlan: 20 }
+        - { name: "GigabitEthernet1/0/15", vlan: 20 }
+        - { name: "GigabitEthernet1/0/16", vlan: 20 }
+        - { name: "GigabitEthernet1/0/17", vlan: 30 }
+        - { name: "GigabitEthernet1/0/18", vlan: 30 }
+        - { name: "GigabitEthernet1/0/19", vlan: 30 }
+        - { name: "GigabitEthernet1/0/20", vlan: 30 }
+        - { name: "GigabitEthernet1/0/21", vlan: 30 }
+        - { name: "GigabitEthernet1/0/22", vlan: 30 }
 
     - name: Set up trunk port
       ios_l2_interfaces:
